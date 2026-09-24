@@ -21,10 +21,21 @@ const videoIds=[
 "wihSHRY2JME",
 "_Q2BtlmqqZA"
 ];
-let player;
+
+window.qrEduState={
+  configuredPlaylist:[...videoIds],
+  activePlaylist:[],
+  currentIndex:0,
+  loopEnabled:false
+};
+
+function syncPlayerState(target){
+  window.qrEduState.activePlaylist=target.getPlaylist()||[];
+  window.qrEduState.currentIndex=target.getPlaylistIndex();
+}
 
 function onYouTubeIframeAPIReady(){
-  player=new YT.Player("player",{
+  window.qrEduPlayer=new YT.Player("player",{
     width:"100%",
     height:"100%",
     playerVars:{
@@ -40,8 +51,11 @@ function onYouTubeIframeAPIReady(){
           startSeconds:0
         });
         event.target.setLoop(true);
+        window.qrEduState.loopEnabled=true;
+        setTimeout(()=>syncPlayerState(event.target),500);
       },
       onStateChange(event){
+        syncPlayerState(event.target);
         if(event.data===YT.PlayerState.ENDED){
           event.target.playVideoAt(0);
         }
