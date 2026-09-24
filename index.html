@@ -8,27 +8,51 @@
 <style>
 html,body{height:100%;margin:0;background:#000}
 body{display:grid;place-items:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-.player{position:fixed;inset:0;display:grid;place-items:center;background:#000}
-iframe{width:100%;height:100%;border:0}
+.player{position:fixed;inset:0;background:#000}
+#player{width:100%;height:100%;border:0}
 noscript{color:#fff;text-align:center;padding:24px}
 </style>
 </head>
 <body>
-<div class="player" id="player"></div>
+<div class="player"><div id="player"></div></div>
 <script>
 const videoIds=[
 "Mqokmn0WOMo",
 "wihSHRY2JME",
 "_Q2BtlmqqZA"
 ];
-const firstVideoId=videoIds[0];
-const nextVideoIds=videoIds.slice(1).join(",");
-const player=document.createElement("iframe");
-player.title="Lista de tres videos en reproducción continua";
-player.src=`https://www.youtube.com/embed/${firstVideoId}?autoplay=1&loop=1&playlist=${nextVideoIds}&playsinline=1&rel=0`;
-player.allow="autoplay; encrypted-media; picture-in-picture";
-player.allowFullscreen=true;
-document.getElementById("player").appendChild(player);
+let player;
+
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player("player",{
+    width:"100%",
+    height:"100%",
+    playerVars:{
+      autoplay:1,
+      playsinline:1,
+      rel:0
+    },
+    events:{
+      onReady(event){
+        event.target.loadPlaylist({
+          playlist:videoIds,
+          index:0,
+          startSeconds:0
+        });
+        event.target.setLoop(true);
+      },
+      onStateChange(event){
+        if(event.data===YT.PlayerState.ENDED){
+          event.target.playVideoAt(0);
+        }
+      }
+    }
+  });
+}
+
+const api=document.createElement("script");
+api.src="https://www.youtube.com/iframe_api";
+document.head.appendChild(api);
 </script>
 <noscript>Necesitas JavaScript habilitado para reproducir los videos.</noscript>
 </body>
