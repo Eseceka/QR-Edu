@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR Edu</title>
+<meta name="robots" content="noindex">
+<style>
+html,body{height:100%;margin:0}body{display:grid;place-items:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#fff;color:#222}.box{text-align:center;padding:24px}.spinner{width:36px;height:36px;border:4px solid #ddd;border-top-color:#333;border-radius:50%;animation:s .8s linear infinite;margin:0 auto 16px}@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="box"><div class="spinner"></div><div>Abriendo un video al azar…</div></div>
+<script>
+const videos=[
+"https://www.youtube.com/watch?v=Mqokmn0WOMo",
+"https://www.youtube.com/watch?v=wihSHRY2JME",
+"https://www.youtube.com/watch?v=_Q2BtlmqqZA"
+];
+const video=videos[Math.floor(Math.random()*videos.length)];
+window.location.replace(video);
+</script>
+<noscript>Necesitas JavaScript habilitado para abrir un video al azar.</noscript>
+</body>
+</html>
