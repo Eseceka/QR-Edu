@@ -21,14 +21,15 @@ const videoIds=[
 "wihSHRY2JME",
 "_Q2BtlmqqZA"
 ];
-const videoId=videoIds[Math.floor(Math.random()*videoIds.length)];
+const firstVideoId=videoIds[0];
+const nextVideoIds=videoIds.slice(1).join(",");
 const player=document.createElement("iframe");
-player.title="Video aleatorio en reproducción continua";
-player.src=`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&playsinline=1&rel=0`;
+player.title="Lista de tres videos en reproducción continua";
+player.src=`https://www.youtube.com/embed/${firstVideoId}?autoplay=1&loop=1&playlist=${nextVideoIds}&playsinline=1&rel=0`;
 player.allow="autoplay; encrypted-media; picture-in-picture";
 player.allowFullscreen=true;
 document.getElementById("player").appendChild(player);
 </script>
-<noscript>Necesitas JavaScript habilitado para reproducir el video.</noscript>
+<noscript>Necesitas JavaScript habilitado para reproducir los videos.</noscript>
 </body>
 </html>
